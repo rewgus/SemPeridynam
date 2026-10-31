@@ -1,4 +1,9 @@
-// definice Gridu
+#pragma once
+
+#include <array>
+#include <vector>
+
+// definice bonds/vazeb
 // hledání sousedů pomocí vnořených for cyklů, jeden x jeden y
     // definice okolí pro hledání
     // hledání částic v okolí
