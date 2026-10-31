@@ -34,7 +34,7 @@ struct MatParams {
 class Solver {
 public:
     // vnitrni fce solver.cpp
-    static void compute_internal_forces(Particles& p, const MatParams& mat);
+    static void compute_forces(Particles& p, const MatParams& mat);
     static void update_damage(Particles& p);
     static void time_step_verlet(Particles& p, const MatParams& mat, double dt);
 };
