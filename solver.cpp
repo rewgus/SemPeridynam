@@ -64,15 +64,36 @@ void Solver::compute_forces(Particles& p, const MatParams& mat) {
 //time step verlet
 void Solver::time_step_verlet(Particles& p, const MatParams& mat, double dt) {
     size_t num_particles = p.initial_positions.size();
-    //vstup pro okrajové podmínky
-    //výpočet počátečních sil a zrychlení
 
+    //priprava halfstep
+    double half_dt = 0.5*dt;
+    //optimalizace - nasobeni misto deleni v for cyklu
+    double inv_rho = 1.0 / mat.rho;
+    //for cyklus pres vsechny castice
+    for (size_t i = 0; i < num_particles; ++i){
+    //výpočet počátečních sil a zrychlení
+    double acc_x = p.force_densities[i][0] * inv_rho;
+    double acc_y = p.force_densities[i][1] * inv_rho;
     //vypocet noveho pulkroku rychlosti a celeho posuvu
+    p.velocities[i][0] += half_dt * acc_x;
+    p.velocities[i][1] += half_dt * acc_y;
+
+    p.positions[i][0] += dt * p.velocities[i][0];
+    p.positions[i][1] += dt * p.velocities[i][1];
+    }
     //vypocet sil, vazeb, energie
         //Výpočet sil působících na každou částici v aktuálním časovém kroku
             // kontrola zda vazby jsou aktivní
             // vypocet vektoru polohy a posuvu => vypocet delky vazby
             // vypocet relativniho prodlouzeni a kontrola zda nebylo prekroceno max
             // vypocet hustoty siloveho pole a akumulace elasticke potenc. energie
+            compute_forces(p, mat);
     // dokonceni casoveho kroku
+    for (size_t i = 0; i < num_particles; ++i){
+    double acc_x = p.force_densities[i][0] * inv_rho;
+    double acc_y = p.force_densities[i][1] * inv_rho;
+
+    p.velocities[i][0] +=half_dt * acc_x;
+    p.velocities[i][1] +=half_dt * acc_y;
+    }
 }
