@@ -1,0 +1,22 @@
+#pragma once
+
+#include <array>
+#include <vector>
+
+// definice bonds/vazeb
+// hledání sousedů pomocí vnořených for cyklů, jeden x jeden y
+    // definice okolí pro hledání
+    // hledání částic v okolí
+        // přeskočit sama sebe
+    // výpočet vzdálenosti jednotlivých částic od částice pro niž běží for cykly
+    // kontrola zda částice jsou v okolí delta částice for cyklu
+
+struct Bonds {
+    std::vector<std::array<int,2>> endpoint_indexes;
+    std::vector<bool> status;
+    std::vector<double> initial_length;
+
+    void add_bond() {
+        
+    }
+};
