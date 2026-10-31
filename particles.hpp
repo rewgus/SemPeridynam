@@ -20,6 +20,10 @@ struct Particles {
     std::vector<std::array<double, 2>> force_densities;
 
     std::vector<double> volumes;
+// sousedé a vazby
+    std::vector<std::vector<int>> neighbors;
+    std::vector<std::vector<bool>> bond_status;
+    std::vector<std::vector<double>> initial_bond_length;
 
     void add_particle(std::array<double, 2> position, double volume) {
         initial_positions.push_back(position);

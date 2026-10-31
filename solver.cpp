@@ -12,7 +12,7 @@ void Solver::compute_forces(Particles& p, const MatParams& mat) {
 
         //nacteni pozic i-te castice
         double p0i_x = p.initial_positions[i][0];
-        double p0i_y = p.initial_positions[i][0];
+        double p0i_y = p.initial_positions[i][1];
         double pi_x = p.positions[i][0];
         double pi_y = p.positions[i][1];
 
