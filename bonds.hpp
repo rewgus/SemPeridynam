@@ -12,6 +12,11 @@
     // kontrola zda částice jsou v okolí delta částice for cyklu
 
 struct Bonds {
-    std::vector<std::array<double,2>> endpoint_indexes;
-    
+    std::vector<std::array<int,2>> endpoint_indexes;
+    std::vector<bool> status;
+    std::vector<double> initial_length;
+
+    void add_bond() {
+        
+    }
 };
