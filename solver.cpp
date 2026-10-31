@@ -12,20 +12,58 @@ void Solver::compute_forces(Particles& p, const MatParams& mat) {
 
         //nacteni pozic i-te castice
         double p0i_x = p.initial_positions[i][0];
-        double p0i_y = p.initial_positions[i][0];
+        double p0i_y = p.initial_positions[i][1];
         double pi_x = p.positions[i][0];
         double pi_y = p.positions[i][1];
 
         //for loop pres vsechny sousedy
         for (size_t k = 0; k < p.neighbors[i].size(); ++k) {
-            
+
+            //preskoc znicene vazby
+            if (p.active_bonds[i][k] == 0){
+                continue;
+            }
+
+            int j = p.neighbors[i][k];
+
+            //vypocet delky vazby pred def
+            double r0_x = p.initial_positions[j][0] - p0i_x;
+            double r0_y = p.initial_positions[j][1] - p0i_y;
+            double init_length = std::hypot(r0_x, r0_y);
+
+            //preskoceni pro cleny bez deformace
+            if (init_length == 0) {
+                continue;
+            }
+
+            //vypocet aktualni deformovane delky
+            double r_x = p.positions[j][0] - pi_x;
+            double r_y = p.positions[j][1] - pi_y;
+            double current_length = std::hypot(r_x, r_y);
+
+            //vypocet jednotkoveho prodlouzeni a kontrola krit prodlouzeni
+            double s = (current_length - init_length) / init_length;
+
+            if (s > mat.s0){
+                p.active_bonds[i][k] = 0;
+                continue;
+            }
+            //vypocet sily mezi casticemi pro ktou castici na ite castici
+            double force_mag = mat.c0 * s;
+
+            //akumulace sily na i-te castici od k-sousedu - integral pres vsechny sousedy
+            f_accum_x += force_mag * (r_x / current_length) * p.volumes[j];
+            f_accum_y += force_mag * (r_y / current_length) * p.volumes[j];
         }
-
+        
+        //ulozeni aktualniho siloveho pusobeni
+        p.force_densities[i][0] = f_accum_x;
+        p.force_densities[i][1] = f_accum_y;
     }
-
-
 }
 //time step verlet
+void Solver::time_step_verlet(Particles& p, const MatParams& mat, double dt) {
+    size_t num_particles = p.initial_positions.size();
     //vstup pro okrajové podmínky
     //výpočet počátečních sil a zrychlení
 
@@ -37,3 +75,4 @@ void Solver::compute_forces(Particles& p, const MatParams& mat) {
             // vypocet relativniho prodlouzeni a kontrola zda nebylo prekroceno max
             // vypocet hustoty siloveho pole a akumulace elasticke potenc. energie
     // dokonceni casoveho kroku
+}
