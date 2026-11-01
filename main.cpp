@@ -1,5 +1,6 @@
 #include <iostream>
 #include "particles.hpp"
+#include "grid.hpp"
 
 //hlavni fce
     //nastaveni hodnot materialovych param - E, rho atd.
@@ -41,7 +42,7 @@ void vysitovaniDesky(Particles& deska, double tloustka, double Sx, double Sy, do
 }
 
 // fce por vizualizaci - obsahuje cyklus pro porovnání s výchozí neupravenou sítí ((Nx+1)*(Ny+1)), složitost O(n^2)
-void vizualizace(const Particles& deska, double dl, int Nx, int Ny) { // const zabrání úpravě
+void visualization(const Particles& deska, double dl, int Nx, int Ny) { // const zabrání úpravě
     for (int i = 0; i <= Ny; i++) {
         for (int j = 0; j <= Nx; j++) {
             bool found = false;
@@ -65,7 +66,9 @@ void vizualizace(const Particles& deska, double dl, int Nx, int Ny) { // const z
 
 int main()
 {
-    Particles deska;
+    Particles board;
+
+    Grid boardMap;
 
     // velikost desky
     double tloustka = 1;  // tloušťka
@@ -81,16 +84,14 @@ int main()
     int Ny = Ly / dl; // interval bodů
 
 // vysíťování obdelníku - síťuji po řádcích - síťuji i hraniční body - mají menší objem přiřazený k materiálovému bodu - proto obsahují if funkce - pokud jsou přesně na kraji, tak mají poloviční objem, v rohu mají čtvrtinový objem
-    vysitovaniDesky(deska, tloustka, Sx, Sy, R, dl, Nx, Ny);
+    vysitovaniDesky(board, tloustka, Sx, Sy, R, dl, Nx, Ny);
 
-    // //kontrola objemu - sedí
-    double particles_volume_sum = 0; //počáteční objem
-
-    // for (std::size_t i = 0; i < deska.volumes.size(); i++) { // std::size_t je stejný typ jako .size(), vhodné pro porovnání i a ...size()
-    //     particles_volume_sum += deska.volumes[i];
-    // }
+    boardMap.build_map(board, dl, Nx, Ny);
   
     // //kontrola Nx, Ny a dalších šikovných veličin
+
+    std::cout << boardMap.particle_indices[25 * (Nx + 1) + 25] <<std::endl;
+
     // std::cout << Nx << ' ' << Ny << std::endl;
 
     // std::cout << deska.positions.size() << std::endl;
@@ -99,7 +100,7 @@ int main()
 
 //vizualizace 
 
-    vizualizace(deska, dl, Nx, Ny);
+    visualization(board, dl, Nx, Ny);
 
     return 0;
 }

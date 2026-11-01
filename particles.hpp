@@ -1,8 +1,3 @@
-#pragma once
-
-#include <array>
-#include <vector>
-
 // Definice jednotlivých částic a jejich okolí peridynamického modelu
     // Matice počáteční polohy bodů, matice aktuální polohy bodů, matice rychlostí
     // Matice silové hustoty f
@@ -10,6 +5,10 @@
     // Matice sousedů ovlivňujích daný bod, matice aktivních vazeb, matice délek vazeb
     // vektory potenciální a disipované energie
     // příprava přidávání bodů pomocí void add_particle
+
+#pragma once
+#include <array>
+#include <vector>
 
 struct Particles {
     std::vector<std::array<double, 2>> initial_positions;
@@ -22,14 +21,17 @@ struct Particles {
     std::vector<double> volumes;
 // sousedé a vazby
     std::vector<std::vector<int>> neighbors;
-    std::vector<std::vector<bool>> bond_status;
+    std::vector<std::vector<bool>> active_bonds;
     std::vector<std::vector<double>> initial_bond_length;
 
     void add_particle(std::array<double, 2> position, double volume) {
         initial_positions.push_back(position);
         positions.push_back(position);
         volumes.push_back(volume);
-        velocities.push_back({0.0, 0}); //0 nebo 0.0 je jedno, 0.0 je jasné, že dat. typ je double
+        velocities.push_back({0, 0}); 
         force_densities.push_back({0, 0});
+        neighbors.push_back({});
+        active_bonds.push_back({});
+        initial_bond_length.push_back({});
     }
 };
