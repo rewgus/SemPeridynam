@@ -90,7 +90,7 @@ int main()
   
     // //kontrola Nx, Ny a dalších šikovných veličin
 
-    std::cout << boardMap.particle_indices[25 * (Nx + 1) + 25] <<std::endl;
+    std::cout << boardMap.particle_indices[25 * (Nx + 1) + 50] <<std::endl;
 
     // std::cout << Nx << ' ' << Ny << std::endl;
 
@@ -100,7 +100,19 @@ int main()
 
 //vizualizace 
 
-    visualization(board, dl, Nx, Ny);
+   // visualization(board, dl, Nx, Ny);
+
+// využití mapovací funkce - složitost O(n)
+    for (int i = 0; i <= Ny; i++) {
+        for (int j = 0; j <= Nx; j++) {
+            if (boardMap.particle_indices[i * (Nx + 1) + j] == -1) {
+                std::cout << ' ';
+            } else {
+                std::cout << "O";
+            }
+        }
+        std::cout << std::endl;
+    }
 
     return 0;
 }
