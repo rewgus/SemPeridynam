@@ -1,0 +1,2 @@
+readME - popis co se resi, kde se co da menit etc. -Projekt musí obsahovat shrnutí, strukturu, a minimalistický popis vstupů a výstupů, příp. využitých algoritmů
+vyuzit branche - Projekt musí být dostupný na gitu, během vývoje je vyžadováno použití kolaborativních prvků, které git poskytuje (issues, mergre requesty, branche)
