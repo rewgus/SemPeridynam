@@ -3,9 +3,8 @@
 #include "particles.hpp"
 #include "grid.hpp"
 #include "solver.hpp"
-#include "solver.cpp"
 #include "io.hpp"
-#include "io.cpp"
+
 
 //hlavni fce
     //nastaveni hodnot materialovych param - E, rho atd.

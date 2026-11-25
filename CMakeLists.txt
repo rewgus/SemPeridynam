@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(MyProgram)
+project(peridynamika)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -11,7 +11,7 @@ set(SOURCES main.cpp solver.cpp io.cpp)
 #file(GLOB SOURCES "*.cpp")
 
 # Create executable
-add_executable(my_program ${SOURCES})
+add_executable(peridynamika ${SOURCES})
 
 # Options
 # cmake -DCMAKE_BUILD_TYPE=Debug ..

@@ -21,13 +21,16 @@ Deska je reprezentována částicemi s přiřazenými objemy. Levý okraj je pev
 V terminálu WSL/Linux spusť z kořenové složky projektu:
 
 ```bash
-g++ -std=c++17 -O2 main.cpp -o peridynamics
-./peridynamics
+cmake -B build-linux && cmake --build build-linux
 ```
 
-Stačí kompilátor s podporou C++17; další knihovny nejsou potřeba. Pro prohlížení výsledků slouží ParaView.
+Stačí kompilátor s podporou C++17 a CMake 3.10; další knihovny nejsou potřeba. Pro prohlížení výsledků slouží ParaView.
 
-Aktuální `main.cpp` přímo vkládá `solver.cpp` a `io.cpp`, proto je v uvedeném příkazu nepřekládej ještě zvlášť. Po úpravě parametrů program znovu přelož.
+Ve složce build-linux vznikne soubor "peridynamika", který lze spustit v prostředí wsl pomocí:
+
+```bash
+./peridynamika
+```
 
 ## Vstupy a jejich úprava
 
